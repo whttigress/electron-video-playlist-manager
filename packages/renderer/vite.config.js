@@ -1,11 +1,14 @@
 /* eslint-env node */
 
-import {chrome} from '../../electron-vendors.config.json';
-import {join} from 'path';
-import {builtinModules} from 'module';
-import vue from '@vitejs/plugin-vue';
+import { chrome } from '../../electron-vendors.config.json'
+import { join } from 'path'
+import { builtinModules } from 'module'
+import vue from '@vitejs/plugin-vue'
+import vuetify from '@vuetify/vite-plugin'
+import vitePluginString from 'vite-plugin-string'
+import pluginSvgVue from '@vuetter/vite-plugin-vue-svg'
 
-const PACKAGE_ROOT = __dirname;
+const PACKAGE_ROOT = __dirname
 
 /**
  * @type {import('vite').UserConfig}
@@ -19,7 +22,32 @@ const config = {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    pluginSvgVue(),
+    vuetify({
+      // autoImport: true,
+      // styles: "expose",
+    }),
+    vitePluginString({
+      /* Default */
+      include: [
+        '**/*.vs',
+        '**/*.fs',
+        '**/*.vert',
+        '**/*.frag',
+        '**/*.glsl',
+        '**/*.txt',
+      ],
+
+      /* Default: undefined */
+      exclude: 'node_modules/**',
+
+      /* Default: true */
+      // if true, using logic from rollup-plugin-glsl
+      compress: false,
+    }),
+  ],
   base: '',
   server: {
     fs: {
@@ -32,13 +60,11 @@ const config = {
     outDir: 'dist',
     assetsDir: '.',
     rollupOptions: {
-      external: [
-        ...builtinModules,
-      ],
+      external: [...builtinModules],
     },
     emptyOutDir: true,
     brotliSize: false,
   },
-};
+}
 
-export default config;
+export default config

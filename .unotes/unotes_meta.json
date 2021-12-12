@@ -1,0 +1,34 @@
+{
+  "name": "",
+  "isOrdered": true,
+  "folders": {
+    "buildResources": {
+      "name": "buildResources",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "packages": {
+      "name": "packages",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "scripts": {
+      "name": "scripts",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "tests": {
+      "name": "tests",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    }
+  },
+  "files": {
+    "README": 0,
+    "contributing": 1
+  }
+}
