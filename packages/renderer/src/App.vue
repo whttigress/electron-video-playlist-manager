@@ -1,8 +1,39 @@
 <template>
-  <v-app>
-    <app-navigation />
+  <div>
+    <div
+      class="
+        title-bar
+        text-white
+        bg-zinc-900
+        sticky
+        top-0
+        p-1
+        left-0
+        right-0
+        h-8
+        flex
+        justify-between
+      "
+    >
+      <span class="ml-3 z-10">Video & Playlist Manager</span>
+      <span class="flex gap-2 title-bar-buttons">
+        <button @click="toggleDevTools">
+          <span class="mdi mdi-xml"></span>
+        </button>
+        <button @click="minimize">
+          <span class="mdi mdi-window-minimize"></span>
+        </button>
+        <button @click="maximize">
+          <span class="mdi mdi-window-maximize"></span>
+        </button>
+        <button @click="exit">
+          <span class="mdi mdi-window-close"></span>
+        </button>
+      </span>
+    </div>
+    <!-- <app-navigation /> -->
     <router-view />
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -13,6 +44,20 @@ export default defineComponent({
   components: {
     AppNavigation,
   },
+  methods: {
+    exit() {
+      window.app_bridge.exit()
+    },
+    minimize() {
+      window.app_bridge.minimize()
+    },
+    maximize() {
+      window.app_bridge.maximize()
+    },
+    toggleDevTools() {
+      window.app_bridge.toggleDevTools()
+    },
+  },
 })
 </script>
 
@@ -20,30 +65,10 @@ export default defineComponent({
 body {
   background-color: #222;
 }
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
-  /* margin-top: 60px; */
+.title-bar {
+  -webkit-app-region: drag;
 }
-a:link {
-  color: lightblue;
-  text-decoration: underline;
-  cursor: auto;
-}
-
-a:link:active {
-  color: lightskyblue;
-}
-a:visited {
-  color: rgb(229, 214, 253);
-  text-decoration: underline;
-  cursor: auto;
-}
-
-a:visited:active {
-  color: #ddabfe;
+.title-bar-buttons {
+  -webkit-app-region: no-drag;
 }
 </style>

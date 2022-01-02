@@ -4,7 +4,6 @@ import { chrome } from '../../electron-vendors.config.json'
 import { join } from 'path'
 import { builtinModules } from 'module'
 import vue from '@vitejs/plugin-vue'
-import vuetify from '@vuetify/vite-plugin'
 import vitePluginString from 'vite-plugin-string'
 import pluginSvgVue from '@vuetter/vite-plugin-vue-svg'
 
@@ -19,16 +18,12 @@ const config = {
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      '/@/': join(PACKAGE_ROOT, './src') + '/',
     },
   },
   plugins: [
     vue(),
     pluginSvgVue(),
-    vuetify({
-      // autoImport: true,
-      // styles: "expose",
-    }),
     vitePluginString({
       /* Default */
       include: [

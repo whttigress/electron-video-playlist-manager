@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply rounded-md py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider drop-shadow-md
+}
