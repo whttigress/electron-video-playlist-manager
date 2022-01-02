@@ -199,7 +199,8 @@ promiseIpc.on('runScript', (args, event) => {
 promiseIpc.on('downloadImageAndJson', (args, event) => {
   return run_script_async(args.command, args.args)
 })
-ipcMain.on('downloadVideo', (args, event) => {
+ipcMain.on('downloadVideo', (event, args) => {
+  console.log(args)
   run_script(args.command, args.args, 'downloadResponse')
 })
 ipcMain.on('app:close', (args, event) => {
@@ -226,6 +227,7 @@ ipcMain.on('toggle-dev-tools', (args, event) => {
 // and will return the full combined output
 // as well as exit code when it's done (using the callback).
 function run_script(command, args, callback) {
+  console.log(command, args, callback)
   var child = child_process.spawn(command, args, {
     encoding: 'utf8',
     shell: true,

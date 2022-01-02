@@ -48,9 +48,14 @@ async function getPlaylistVideos(fileName) {
 function closeModal() {
   toggleModal.value = false
 }
+function removeVideoPath(path) {
+  return path.replace(videoPath.value, '')
+}
+const videoPath = ref('')
 const toggleModal = ref(false)
 watch(toggleModal, async (nval) => {
   if (nval) {
+    videoPath.value = await settingsStore.get('videoFilePath')
     let playlists = await getPlaylistFiles()
     if (playlists.length > 0) {
       getPlaylistVideos(playlists[0])
@@ -114,7 +119,7 @@ watch(toggleModal, async (nval) => {
                           v-model="video.checked"
                         />
                         <span class="">
-                          {{ video.filePath }}
+                          {{ removeVideoPath(video.filePath) }}
                         </span>
                       </span>
                       <span

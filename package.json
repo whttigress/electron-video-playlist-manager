@@ -1,5 +1,8 @@
 {
-  "name": "vite-electron-builder",
+  "name": "video-playlist-manager",
+  "productName": "Video and Playlist Manager",
+  "description": "This app creates ACG playlists for videos within a specified folder and it's subflders.",
+  "author": "Rhiannon Martinez",
   "private": true,
   "engines": {
     "node": ">=v16.13",
@@ -9,7 +12,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "precompile": "cross-env MODE=production npm run build",
-    "compile": "electron-builder build --config electron-builder.config.js --dir --config.asar=false",
+    "compile": "electron-builder build --config electron-builder.config.js",
     "pretest": "npm run build",
     "test": "node tests/app.spec.js",
     "watch": "node scripts/watch.js",

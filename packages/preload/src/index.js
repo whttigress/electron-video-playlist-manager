@@ -1,6 +1,5 @@
 import { contextBridge, ipcRenderer, remote } from 'electron'
 
-import { createHash } from 'crypto'
 import Settings from './settings'
 const settings = new Settings({
   // We'll call our data file 'user-preferences'
@@ -38,7 +37,7 @@ import promiseIpc from 'electron-promise-ipc'
 
 contextBridge.exposeInMainWorld('app_bridge', {
   exit() {
-    ipcRenderer.send('app:quit')
+    ipcRenderer.send('app:close')
   },
   minimize() {
     ipcRenderer.send('app:minimize')
@@ -60,7 +59,6 @@ contextBridge.exposeInMainWorld('videos_bridge', {
   deleteVideo: async (path) => {
     return deleteVideo(path)
   },
-  getFolderImageAndJson: async (path) => {},
 })
 contextBridge.exposeInMainWorld('playlist_bridge', {
   getPlaylistList: async (path) => {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-screen">
     <div
       class="
         title-bar
@@ -32,7 +32,9 @@
       </span>
     </div>
     <!-- <app-navigation /> -->
-    <router-view />
+    <div class="scroll_enabled flex-1">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -70,5 +72,27 @@ body {
 }
 .title-bar-buttons {
   -webkit-app-region: no-drag;
+}
+.scroll_enabled {
+  overflow: scroll;
+  /* height: 1000px; define your custom height */
+}
+
+.scroll_enabled::-webkit-scrollbar {
+  width: 20px;
+}
+.scroll_enabled::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
+.scroll_enabled::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 6px;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: content-box;
+  min-width: 32px;
+  min-height: 32px;
+}
+.scroll_enabled::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
 }
 </style>

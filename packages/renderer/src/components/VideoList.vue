@@ -4,6 +4,7 @@ import { useSettings } from '/@/stores/settings'
 import directory from '/@/components/directory.vue'
 import playlistFiles from '/@/components/playlistfiles.vue'
 import preferences from '/@/components/preferences.vue'
+import downloader from '/@/components/downloader.vue'
 import draggable from 'vuedraggable'
 import { computed, defineComponent, ref } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -151,6 +152,7 @@ var summaryTotals = computed(() => {
       </button>
       <playlistFiles></playlistFiles>
       <preferences></preferences>
+      <downloader></downloader>
     </div>
     <div class="my-1 mb-2">
       <span class="m-1">
