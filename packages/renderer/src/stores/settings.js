@@ -27,7 +27,6 @@ export const useSettings = defineStore('settingsStore', () => {
     prefs.value[key] = value
     return window.settings_bridge.save(key, value)
   }
-  console.log(prefs.value)
   return {
     prefs,
     get,

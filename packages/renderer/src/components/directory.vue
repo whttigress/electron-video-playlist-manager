@@ -150,10 +150,13 @@ if (props.directory.thumbnail) {
           leave-from-class="hidden"
           leave-to-class="hidden"
           enter-to-class=""
-          ><div :key="directory.collapsed">
+        >
+          <div :key="directory.collapsed">
             <span
-              class="mdi mdi-chevron-up"
-              :class="directory.collapsed ? 'mdi-rotate-180' : ''"
+              class="mdi"
+              :class="
+                directory.collapsed ? 'mdi-chevron-down' : 'mdi-chevron-up'
+              "
             ></span>
           </div>
         </transition>

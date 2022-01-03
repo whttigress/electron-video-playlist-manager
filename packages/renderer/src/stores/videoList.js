@@ -1,14 +1,24 @@
 import { defineStore } from 'pinia'
 import { useSettings } from '/@/stores/settings'
 import stringSimilarity from 'string-similarity'
+import debounce from 'lodash/debounce'
 import { ref, computed, watch } from 'vue'
 
 export const useVideoList = defineStore('videoList', () => {
   const videoList = ref([])
   const groupedAndSortedVideos = ref([])
   const filterString = ref('')
+
   const filteredVideoList = computed(() => {
-    return videoList.value.filter((x) => x)
+    const list = videoList.value
+    const filterText = filterString.value.toLowerCase()
+    let filteredList = []
+    for (let file of list) {
+      if (file.filePath.toLowerCase().includes(filterText)) {
+        filteredList.push(file)
+      }
+    }
+    return filteredList
   })
   function findEpisode(string) {
     var r = /\d+/g
@@ -36,10 +46,23 @@ export const useVideoList = defineStore('videoList', () => {
   }
   async function getVideoList() {
     var videoFilePath = await useSettings().get('videoFilePath')
+    console.log('retrieve videos')
     videoList.value = await window.videos_bridge.getVideoList(videoFilePath)
   }
-  watch(videoList, sortAndGroupVideos)
+  const debounceSort = debounce(() => {
+    console.log('debounce sort')
+    sortAndGroupVideos()
+  }, 750)
+  // watch(videoList.value, sortAndGroupVideos)
+  watch(filteredVideoList, debounceSort)
+  function removeVideo(path) {
+    let i = videoList.value.findIndex((x) => x.filePath == path)
+    if (i >= 0) {
+      videoList.value.splice(i, 1)
+    }
+  }
   async function sortAndGroupVideos() {
+    console.log('sortAndGroupVideos')
     var ignoreNames = await useSettings().get('ignoreNames')
     var grouped = {}
     for (let video of filteredVideoList.value) {
@@ -273,6 +296,7 @@ export const useVideoList = defineStore('videoList', () => {
     sortAndGroupVideos,
     getFilePaths,
     filterString,
+    removeVideo,
   }
 })
 

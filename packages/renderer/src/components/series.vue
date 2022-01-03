@@ -1,7 +1,7 @@
 <script setup>
 import videoListing from '/@/components/video.vue'
 import draggable from 'vuedraggable'
-import {  reactive, computed } from 'vue'
+import { reactive, computed } from 'vue'
 import { useFormatting } from '/@/composables/formatting'
 const { getMbpsIconColor, formatSecondsToTimeString, sizeFormat } =
   useFormatting()
@@ -89,8 +89,8 @@ const mbpsColor = computed(() => {
         >
           <div :key="series.collapsed">
             <span
-              class="mdi mdi-chevron-up"
-              :class="series.collapsed ? 'mdi-rotate-180' : ''"
+              class="mdi"
+              :class="series.collapsed ? 'mdi-chevron-down' : 'mdi-chevron-up'"
             ></span>
           </div>
         </transition>

@@ -7,27 +7,31 @@
         bg-zinc-900
         sticky
         top-0
-        p-1
         left-0
         right-0
         h-8
         flex
         justify-between
+        items-center
       "
     >
-      <span class="ml-3 z-10">Video & Playlist Manager</span>
-      <span class="flex gap-2 title-bar-buttons">
+      <span class="ml-4 z-10">Video & Playlist Manager</span>
+      <span class="flex items-center title-bar-buttons">
         <button @click="toggleDevTools">
-          <span class="mdi mdi-xml"></span>
+          <span class="mdi mdi-xml p-2 hover:bg-zinc-700 px-4"></span>
         </button>
         <button @click="minimize">
-          <span class="mdi mdi-window-minimize"></span>
+          <span
+            class="mdi mdi-window-minimize hover:bg-zinc-700 p-2 px-4"
+          ></span>
         </button>
         <button @click="maximize">
-          <span class="mdi mdi-window-maximize"></span>
+          <span
+            class="mdi mdi-window-maximize hover:bg-zinc-700 p-2 px-4"
+          ></span>
         </button>
         <button @click="exit">
-          <span class="mdi mdi-window-close"></span>
+          <span class="mdi mdi-window-close hover:bg-red-500 p-2 px-4"></span>
         </button>
       </span>
     </div>

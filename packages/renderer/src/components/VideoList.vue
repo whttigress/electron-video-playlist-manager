@@ -2,9 +2,10 @@
 import { useVideoList } from '/@/stores/videoList'
 import { useSettings } from '/@/stores/settings'
 import directory from '/@/components/directory.vue'
-import playlistFiles from '/@/components/playlistfiles.vue'
-import preferences from '/@/components/preferences.vue'
-import downloader from '/@/components/downloader.vue'
+import downloadForm from '/@/components/downloadForm.vue'
+import settingsForm from '/@/components/settingsForm.vue'
+import playlistForm from '/@/components/playlistForm.vue'
+import grmDialog from '/@/components/grm-dialog.vue'
 import draggable from 'vuedraggable'
 import { computed, defineComponent, ref } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -12,13 +13,16 @@ import { useFormatting } from '/@/composables/formatting'
 const { formatSecondsToTimeString, sizeFormat } = useFormatting()
 const settingsStore = useSettings()
 const videoStore = useVideoList()
+videoStore.getVideoList()
+let downloadDialog = ref(false)
+let settingsDialog = ref(false)
+let playlistDialog = ref(false)
 const skippedFiles = ref([
   {
     groupName: 'Skipped',
     series: [{ seriesName: '‎', videos: [] }],
   },
 ])
-videoStore.getVideoList()
 const { groupedAndSortedVideos, filterString } = storeToRefs(videoStore)
 async function savePlaylist() {
   var files = videoStore.getFilePaths(groupedAndSortedVideos.value)
@@ -45,7 +49,6 @@ function refreshDirectory() {
   ]
   videoStore.getVideoList()
 }
-
 function skipAdd(evt) {
   //go through skippedFiles array and collapse all directroies except the first one
   skippedFiles.value.sort((a, b) => {
@@ -131,7 +134,7 @@ var summaryTotals = computed(() => {
 </script>
 <template>
   <div class="m-4 text-white">
-    <div>
+    <div class="">
       <button
         class="btn bg-slate-500 border border-slate-900 m-1 hover:bg-slate-700"
         @click="refreshDirectory"
@@ -146,16 +149,31 @@ var summaryTotals = computed(() => {
       </button>
       <button
         class="btn bg-slate-500 border border-slate-900 m-1 hover:bg-slate-700"
+        @click="playlistDialog = true"
+      >
+        Playlist Videos
+      </button>
+      <button
+        class="btn bg-slate-500 border border-slate-900 m-1 hover:bg-slate-700"
+        @click="downloadDialog = true"
+      >
+        Download Video
+      </button>
+      <button
+        class="btn bg-slate-500 border border-slate-900 m-1 hover:bg-slate-700"
+        @click="settingsDialog = true"
+      >
+        Settings
+      </button>
+      <button
+        class="btn bg-sky-900 border border-slate-900 m-1 hover:bg-sky-700"
         @click="savePlaylist"
       >
         save playlist
       </button>
-      <playlistFiles></playlistFiles>
-      <preferences></preferences>
-      <downloader></downloader>
     </div>
     <div class="my-1 mb-2">
-      <span class="m-1">
+      <span class="m-1 inline-block">
         <span class="p-1 bg-cyan-700 border-r border-cyan-900 shadow-inner">
           Count:
         </span>
@@ -165,7 +183,7 @@ var summaryTotals = computed(() => {
           {{ summaryTotals.count }}
         </span>
       </span>
-      <span class="m-1"
+      <span class="m-1 inline-block"
         ><span class="p-1 bg-cyan-700 border-r border-cyan-900 shadow-inner">
           Duration:
         </span>
@@ -173,7 +191,7 @@ var summaryTotals = computed(() => {
           >{{ summaryTotals.parsedDuration }}
         </span></span
       >
-      <span class="m-1"
+      <span class="m-1 inline-block"
         ><span class="p-1 bg-cyan-700 border-r border-cyan-900 shadow-inner">
           Size:
         </span>
@@ -183,9 +201,24 @@ var summaryTotals = computed(() => {
           {{ sizeFormat(summaryTotals.size) }}
         </span></span
       >
+      <input
+        type="text"
+        class="
+          appearance-none
+          h-6
+          p-0
+          bg-transparent
+          focus:outline-none focus:ring-0 focus:shadow-none
+          m-2
+          bg-slate-600
+          border-b border-white
+        "
+        placeholder="filter"
+        v-model="filterString"
+      />
     </div>
-    <div class="grid lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2">
+    <div class="grid md:grid-cols-5 lg:grid-cols-3 gap-6">
+      <div class="md:col-span-3 lg:col-span-2">
         <draggable
           v-model="groupedAndSortedVideos"
           group="directories"
@@ -196,7 +229,7 @@ var summaryTotals = computed(() => {
           </template>
         </draggable>
       </div>
-      <div>
+      <div class="md:col-span-2 lg:col-span-1">
         <draggable
           v-model="skippedFiles"
           group="directories"
@@ -209,6 +242,15 @@ var summaryTotals = computed(() => {
         </draggable>
       </div>
     </div>
+    <grm-dialog v-model:dialog="downloadDialog">
+      <download-form v-model:dialog="downloadDialog"></download-form>
+    </grm-dialog>
+    <grm-dialog v-model:dialog="settingsDialog">
+      <settings-form v-model:dialog="settingsDialog"></settings-form>
+    </grm-dialog>
+    <grm-dialog v-model:dialog="playlistDialog">
+      <playlist-form v-model:dialog="playlistDialog"></playlist-form>
+    </grm-dialog>
   </div>
 </template>
 <style scoped></style>
