@@ -203,16 +203,7 @@ var summaryTotals = computed(() => {
       >
       <input
         type="text"
-        class="
-          appearance-none
-          h-6
-          p-0
-          bg-transparent
-          focus:outline-none focus:ring-0 focus:shadow-none
-          m-2
-          bg-slate-600
-          border-b border-white
-        "
+        class="appearance-none h-6 p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none m-2 bg-slate-600 border-b border-white"
         placeholder="filter"
         v-model="filterString"
       />

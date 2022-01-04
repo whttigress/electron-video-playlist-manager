@@ -65,19 +65,7 @@ if (props.video.fileThumbnail) {
           :class="`${mbpsColor}`"
           ><span class="relative">
             <span
-              class="
-                text-white text-xs
-                absolute
-                -left-5
-                bg-slate-900
-                px-2
-                py-1
-                rounded-md
-                ml-10
-                hidden
-                w-20
-                group-hover:inline-block
-              "
+              class="text-white text-xs absolute -left-5 bg-slate-900 px-2 py-1 rounded-md ml-10 hidden w-20 group-hover:inline-block"
               >{{ mbps }} Mbps</span
             >
           </span>

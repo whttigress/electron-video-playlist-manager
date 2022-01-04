@@ -45,6 +45,7 @@ export const useVideoList = defineStore('videoList', () => {
     }
   }
   async function getVideoList() {
+    groupedAndSortedVideos.value = []
     var videoFilePath = await useSettings().get('videoFilePath')
     console.log('retrieve videos')
     videoList.value = await window.videos_bridge.getVideoList(videoFilePath)
