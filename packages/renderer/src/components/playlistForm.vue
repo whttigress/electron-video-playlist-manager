@@ -1,4 +1,8 @@
 <script setup>
+import { computed, defineComponent, ref, watch } from 'vue'
+import { useVideoList } from '/@/stores/videoList'
+import { useSettings } from '/@/stores/settings'
+import { useFormatting } from '/@/composables/formatting'
 let props = defineProps({
   dialog: Boolean,
 })
@@ -16,11 +20,7 @@ async function loadPlaylists() {
     getPlaylistVideos(playlistFiles.value[0])
   }
 }
-import { computed, defineComponent, ref, watch } from 'vue'
-import { useVideoList } from '/@/stores/videoList'
-import { useSettings } from '/@/stores/settings'
 const settingsStore = useSettings()
-import { useFormatting } from '/@/composables/formatting'
 // const { getMbpsIconColor, sizeFormat } = useFormatting()
 const videoStore = useVideoList()
 async function deleteVideo(path) {

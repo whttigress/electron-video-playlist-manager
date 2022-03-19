@@ -143,7 +143,7 @@ contextBridge.exposeInMainWorld('youtube_bridge', {
   loadBatList: async (path) => {},
   loadBat: async (path) => {},
   saveBat: async (path, data) => {},
-  downoladChannelImageAndJson: async (channel) => {
+  downloadChannelImageAndJson: async (channel) => {
     let ytdl = await settings.get('ytdlpExePath')
     return promiseIpc.send('downloadImageAndJson', {
       command: ytdl,
@@ -156,7 +156,7 @@ contextBridge.exposeInMainWorld('youtube_bridge', {
       ],
     })
   },
-  downoladVideoImageAndJson: async (url) => {
+  downloadVideoImageAndJson: async (url) => {
     let ytdl = await settings.get('ytdlpExePath')
     return promiseIpc.send('downloadImageAndJson', {
       command: ytdl,

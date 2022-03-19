@@ -17,13 +17,14 @@ videoStore.getVideoList()
 let downloadDialog = ref(false)
 let settingsDialog = ref(false)
 let playlistDialog = ref(false)
-const skippedFiles = ref([
-  {
-    groupName: 'Skipped',
-    series: [{ seriesName: '‎', videos: [] }],
-  },
-])
-const { groupedAndSortedVideos, filterString } = storeToRefs(videoStore)
+// const skippedFiles = ref([
+//   {
+//     groupName: 'Skipped',
+//     series: [{ seriesName: '‎', videos: [] }],
+//   },
+// ])
+const { groupedAndSortedVideos, filterString, skippedFiles } =
+  storeToRefs(videoStore)
 async function savePlaylist() {
   var files = videoStore.getFilePaths(groupedAndSortedVideos.value)
   console.log(files)
@@ -50,7 +51,7 @@ function refreshDirectory() {
   videoStore.getVideoList()
 }
 function skipAdd(evt) {
-  //go through skippedFiles array and collapse all directroies except the first one
+  //go through skippedFiles array and collapse all directories except the first one
   skippedFiles.value.sort((a, b) => {
     return a.groupName == 'Skipped' ? -1 : 1
   })

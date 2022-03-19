@@ -6,6 +6,26 @@ import { ref, computed, watch } from 'vue'
 
 export const useVideoList = defineStore('videoList', () => {
   const videoList = ref([])
+  const skippedFiles = ref([
+    {
+      groupName: 'Skipped',
+      series: [{ seriesName: '‎', videos: [] }],
+    },
+  ])
+  const skippedVideosFlat = computed(() => {
+    let list = []
+    for (let i = 0; i < skippedFiles.value.length; i++) {
+      let group = skippedFiles.value[i]
+      for (let j = 0; j < group.series.length; j++) {
+        let series = group.series[j]
+        for (let k = 0; k < series.videos.length; k++) {
+          let video = series.videos[k]
+          list.push(video)
+        }
+      }
+    }
+    return list
+  })
   const groupedAndSortedVideos = ref([])
   const filterString = ref('')
 
@@ -29,10 +49,10 @@ export const useVideoList = defineStore('videoList', () => {
       return Number(matches[0])
     } else {
       var epReg = /(?:(#|ep|part|episode|E)\s?)([\d])+/gi
-      var epmatch = string.match(epReg)
-      if (epmatch?.length == 1) {
-        // if (epmatch && epmatch.length == 1) {
-        return Number(epmatch[0].match(r)[0])
+      var epMatch = string.match(epReg)
+      if (epMatch?.length == 1) {
+        // if (epMatch && epMatch.length == 1) {
+        return Number(epMatch[0].match(r)[0])
       } else {
         var r3 = /(?:(-)\s?)([\d])+/g
         var m3 = string.match(r3)
@@ -67,10 +87,16 @@ export const useVideoList = defineStore('videoList', () => {
     var ignoreNames = await useSettings().get('ignoreNames')
     var grouped = {}
     for (let video of filteredVideoList.value) {
-      if (grouped[video.directory]) {
-        grouped[video.directory].push(video)
-      } else {
-        grouped[video.directory] = [video]
+      if (
+        skippedVideosFlat.value.findIndex(
+          (x) => x.filePath == video.filePath,
+        ) == -1
+      ) {
+        if (grouped[video.directory]) {
+          grouped[video.directory].push(video)
+        } else {
+          grouped[video.directory] = [video]
+        }
       }
     }
     var groups = {}
@@ -148,7 +174,7 @@ export const useVideoList = defineStore('videoList', () => {
           link = `https://www.youtube.com/watch?v=${videoId}`
         }
         if (link && !video.fileJson) {
-          window.youtube_bridge.downoladVideoImageAndJson(link)
+          window.youtube_bridge.downloadVideoImageAndJson(link)
         }
         var shortName = fileName
           .replace(/-\([0-9.]+\)-/gi, ' ')
@@ -298,6 +324,8 @@ export const useVideoList = defineStore('videoList', () => {
     getFilePaths,
     filterString,
     removeVideo,
+    skippedFiles,
+    skippedVideosFlat,
   }
 })
 

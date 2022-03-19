@@ -3,8 +3,8 @@ import { computed, defineComponent, ref, watch } from 'vue'
 import listManager from '/@/components/list-manager.vue'
 
 import { useSettings } from '/@/stores/settings'
-const settingsStore = useSettings()
 import { storeToRefs } from 'pinia'
+const settingsStore = useSettings()
 const { prefs } = storeToRefs(settingsStore)
 let props = defineProps({
   dialog: Boolean,
